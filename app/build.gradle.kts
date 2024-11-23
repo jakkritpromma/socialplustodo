@@ -74,6 +74,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.junit.jupiter)
+    androidTestImplementation(libs.androidx.core.testing)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.androidx.room.runtime)
@@ -92,5 +93,8 @@ dependencies {
     androidTestImplementation(libs.retrofit.mock)
     testImplementation(libs.okhttp)
     androidTestImplementation(libs.mockwebserver)
+
+    testImplementation("androidx.room:room-testing:2.5.0")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
 
 }
