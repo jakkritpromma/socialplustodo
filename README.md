@@ -6,6 +6,7 @@ The architecture is MVVM.
 Android Jetpack Compose is used for creating the screen.
 Retrofit is used for getting the response from https://jsonplaceholder.typicode.com/todos .
 Room database is used for locally storing the response.
+
 For more information, please contact me.
 
 Best regards,
