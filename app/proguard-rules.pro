@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Keep OkHttp and MockWebServer classes
+-keep class okhttp3.** { *; }
+-keep class okhttp3.mockwebserver.** { *; }
+
+# Keep classes in Retrofit (if used)
+-keep class retrofit2.** { *; }
