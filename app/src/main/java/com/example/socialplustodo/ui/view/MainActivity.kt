@@ -14,7 +14,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
-            todoViewModel.fetchTodos()
             TodoListScreen(viewModel = todoViewModel)
         }
     }

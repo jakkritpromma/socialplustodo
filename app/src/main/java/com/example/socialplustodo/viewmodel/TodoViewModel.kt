@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.socialplustodo.RetrofitInstance
+import com.example.socialplustodo.retrofit.RetrofitInstance
 import com.example.socialplustodo.database.TodoDatabase
 import com.example.socialplustodo.model.Todo
 import com.example.socialplustodo.repository.TodoRepository
