@@ -17,11 +17,15 @@ import com.example.socialplustodo.viewmodel.TodoViewModel
 
 @Composable fun TodoListScreen(viewModel: TodoViewModel) { //MockTodoViewModel
     val todos by viewModel.allTodos.observeAsState(emptyList())
-
+    LaunchedEffect(Unit) {
+        viewModel.fetchTodos()
+    }
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             items(todos) { todo ->
-                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)) {
                     Text(text = todo.title)
                     Text(text = "Completed: ${todo.completed}")
                 }
@@ -35,6 +39,5 @@ class MockTodoViewModel : ViewModel() {
 }
 
 @Preview(showBackground = true) @Composable fun PreviewTodoListScreen() {
-    val mockViewModel = MockTodoViewModel()
-    //TodoListScreen(viewModel = mockViewModel)
+    val mockViewModel = MockTodoViewModel() //TodoListScreen(viewModel = mockViewModel)
 }

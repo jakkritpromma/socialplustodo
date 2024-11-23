@@ -1,4 +1,4 @@
-package com.example.socialplustodo
+package com.example.socialplustodo.retrofit
 
 import com.example.socialplustodo.interfaces.ApiInterface
 import retrofit2.Retrofit
