@@ -2,7 +2,7 @@ package com.example.socialplustodo.repository
 
 import com.example.socialplustodo.interfaces.ApiInterface
 import com.example.socialplustodo.interfaces.TodoDaoInterface
-import com.example.socialplustodo.model.TodoEntity
+import com.example.socialplustodo.model.Todo
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -14,7 +14,7 @@ import org.mockito.Mockito.verify
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TodoRepositoryTest {
+class TodoRepositoryResponseTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var todoRepository: TodoRepository
     private val todoDaoInterface: TodoDaoInterface = mock()
@@ -38,6 +38,16 @@ class TodoRepositoryTest {
         }
     }
 
+    @After
+    fun tearDown() {
+        try {
+            println("Shut down mockWebServer.")
+            mockWebServer.shutdown()
+        } catch (e: UninitializedPropertyAccessException) {
+            println("mockWebServer was not initialized: ${e.message}")
+        }
+    }
+
     @Test
     fun testGetTodosFromApiSuccessfullyAndInsertsIntoDB() = runBlocking {
         val mockTodosResponse = """
@@ -53,8 +63,8 @@ class TodoRepositoryTest {
 
         verify(todoDaoInterface).insertTodos(
             listOf(
-                TodoEntity(1, 1, "Todo 1", false),
-                TodoEntity(2, 1, "Todo 2", true)
+                Todo(1, 1, "Todo 1", false),
+                Todo(2, 1, "Todo 2", true)
             )
         )
     }
@@ -64,16 +74,6 @@ class TodoRepositoryTest {
         mockWebServer.enqueue(MockResponse().setResponseCode(500))
         val result = todoRepository.fetchTodosFromNetwork()
         assert(result.isEmpty())
-    }
-
-    @After
-    fun tearDown() {
-        try {
-            println("Shut down mockWebServer.")
-            mockWebServer.shutdown()
-        } catch (e: UninitializedPropertyAccessException) {
-            println("mockWebServer was not initialized: ${e.message}")
-        }
     }
 }
 

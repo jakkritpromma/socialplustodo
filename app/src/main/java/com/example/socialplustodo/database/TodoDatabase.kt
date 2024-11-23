@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.socialplustodo.model.TodoEntity
+import com.example.socialplustodo.model.Todo
 import com.example.socialplustodo.interfaces.TodoDaoInterface
 
-@Database(entities = [TodoEntity::class], version = 1)
+@Database(entities = [Todo::class], version = 1)
 abstract class TodoDatabase : RoomDatabase() {
 
     abstract fun todoDao(): TodoDaoInterface
