@@ -1,5 +1,6 @@
 package com.example.socialplustodo.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.example.socialplustodo.interfaces.ApiInterface
 import com.example.socialplustodo.interfaces.TodoDaoInterface
 import com.example.socialplustodo.model.Todo
@@ -18,6 +19,7 @@ class TodoRepositoryResponseTest {
     private lateinit var mockWebServer: MockWebServer
     private lateinit var todoRepository: TodoRepository
     private val todoDaoInterface: TodoDaoInterface = mock()
+    private lateinit var errorMessage: MutableLiveData<String?>
 
     @Before
     fun setUp() {
@@ -31,7 +33,8 @@ class TodoRepositoryResponseTest {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val apiInterface = retrofit.create(ApiInterface::class.java)
-            todoRepository = TodoRepository(apiInterface, todoDaoInterface)
+            errorMessage = MutableLiveData(null)
+            todoRepository = TodoRepository(apiInterface, todoDaoInterface, errorMessage)
             println("MockWebServer started at: $baseUrl")
         } catch (e: Exception) {
             println("setUp Error: ${e.message}")
@@ -58,7 +61,7 @@ class TodoRepositoryResponseTest {
         """
 
         mockWebServer.enqueue(MockResponse().setBody(mockTodosResponse).setResponseCode(200))
-        val result = todoRepository.fetchTodosFromNetwork()
+        val result = todoRepository.getTodosFromNetwork()
         assert(result.size == 2)
 
         verify(todoDaoInterface).insertTodos(
@@ -72,7 +75,7 @@ class TodoRepositoryResponseTest {
     @Test
     fun testGetTodosFromApiHandlesAPIFailure() = runBlocking {
         mockWebServer.enqueue(MockResponse().setResponseCode(500))
-        val result = todoRepository.fetchTodosFromNetwork()
+        val result = todoRepository.getTodosFromNetwork()
         assert(result.isEmpty())
     }
 }
